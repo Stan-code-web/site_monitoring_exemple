@@ -5,6 +5,8 @@ if (in_array($test_case, array(0,1))) {
 	sleep($time_to_wait/10);
 	echo "<html><body>200 but waiting ", $time_to_wait, "</body></html>";
 } else {
+	$time_to_wait=random_int(0, 50);
+	sleep($time_to_wait/10);
     header('HTTP/1.1 500 Internal Server Error');
 }
 

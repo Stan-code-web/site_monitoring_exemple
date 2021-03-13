@@ -32,12 +32,7 @@ services:
       
     build:
       context: .
-      dockerfile: Dockerfile-heartbeat
-    
-    #image: docker.elastic.co/beats/heartbeat:7.11.1
-      
-    #volumes:
-    #  - ./heartbeat.docker.yml:/usr/share/heartbeat/heartbeat.yml
+      dockerfile: dockerfile-heartbeat
       
     networks:
       - elastic

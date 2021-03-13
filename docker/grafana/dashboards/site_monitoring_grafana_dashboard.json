@@ -52,7 +52,7 @@
         "handler": 1,
         "message": "InWebo site is down",
         "name": "Status of InWebo site alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "notifier1"
@@ -219,17 +219,17 @@
           {
             "evaluator": {
               "params": [
-                2
+                5
               ],
-              "type": "gt"
+              "type": "lt"
             },
             "operator": {
               "type": "and"
             },
             "query": {
               "params": [
-                "B",
-                "1m",
+                "A",
+                "5m",
                 "now"
               ]
             },
@@ -241,8 +241,8 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
+        "for": "1m",
+        "frequency": "30s",
         "handler": 1,
         "message": "Famira website is down !",
         "name": "Status of Famira site alert",
@@ -358,8 +358,8 @@
           "colorMode": "critical",
           "fill": true,
           "line": true,
-          "op": "gt",
-          "value": 2,
+          "op": "lt",
+          "value": 5,
           "visible": true
         }
       ],
@@ -423,7 +423,7 @@
             "query": {
               "params": [
                 "A",
-                "30s",
+                "1m",
                 "now"
               ]
             },
@@ -440,7 +440,7 @@
         "handler": 1,
         "message": "InWebo website is very slow",
         "name": "InWebo response time alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "notifier1"
@@ -587,7 +587,7 @@
           {
             "evaluator": {
               "params": [
-                2000
+                1000
               ],
               "type": "gt"
             },
@@ -609,12 +609,12 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
+        "for": "30s",
+        "frequency": "30s",
         "handler": 1,
         "message": "Famira website is very slow",
         "name": "Famira response time alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "notifier1"
@@ -707,7 +707,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 2000,
+          "value": 1000,
           "visible": true
         }
       ],
@@ -755,7 +755,7 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "10s",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -770,5 +770,5 @@
   "timezone": "",
   "title": "Site monitoring",
   "uid": "0jfUVf8Mz",
-  "version": 1
+  "version": 3
 }
