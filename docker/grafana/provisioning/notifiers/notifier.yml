@@ -1,0 +1,13 @@
+notifiers:
+  - name: 'WebHook'
+    type: webhook
+    uid: notifier1
+    orgId: 1
+    is_default: true
+    send_reminder: false
+    disable_resolve_message: false
+    # See `Supported Settings` section for settings supported for each
+    # alert notification type.
+    settings:
+      url: 'https://webhook.site/693630a3-7a32-4986-a7d2-5fb272d8b7c0'
+      httpMethod: POST

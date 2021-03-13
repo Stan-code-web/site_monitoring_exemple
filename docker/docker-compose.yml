@@ -1,0 +1,62 @@
+version: '3'
+
+networks:
+  elastic:
+    name: elastic
+    driver: bridge
+    
+volumes:
+  elk-storage:
+    driver: local
+  grafana-storage:
+    driver: local
+    
+services:
+  elk:
+    container_name: elk01
+    hostname: elasticsearch
+
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+      
+    environment:
+      - discovery.type=single-node
+       
+    networks:
+      - elastic
+      
+    volumes:
+      - elk-storage:/usr/share/elasticsearch/data
+      
+  heartbeat:
+    container_name: hb
+      
+    build:
+      context: .
+      dockerfile: Dockerfile-heartbeat
+    
+    #image: docker.elastic.co/beats/heartbeat:7.11.1
+      
+    #volumes:
+    #  - ./heartbeat.docker.yml:/usr/share/heartbeat/heartbeat.yml
+      
+    networks:
+      - elastic
+      
+    depends_on: ['elk']
+      
+  grafana:
+    image: grafana/grafana
+    
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/dashboards/:/etc/grafana/dashboards/
+      - ./grafana/provisioning:/etc/grafana/provisioning/
+    
+    networks:
+      - elastic
+      
+    ports:
+      - 80:3000
+      
+    depends_on: ['elk']

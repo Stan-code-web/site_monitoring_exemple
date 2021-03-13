@@ -1,0 +1,19 @@
+heartbeat.monitors:
+- type: http
+  schedule: '@every 15s'
+  timeout: 10
+  urls:
+    - https://www.inwebo.com
+  id: inwebo-status
+  name: Inwebo Status
+  
+- type: http
+  schedule: '@every 15s'
+  timeout: 10
+  urls:
+    - https://famira.fr/test.php
+  id: famira-status
+  name: Famira Status
+
+output.elasticsearch:
+  hosts: 'elasticsearch:9200'
