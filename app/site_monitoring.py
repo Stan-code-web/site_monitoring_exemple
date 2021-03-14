@@ -1,3 +1,16 @@
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import requests as r
 import time
 import yaml
@@ -48,23 +61,24 @@ class SiteMonitoringApp:
             conf_data = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
             if (not 'conf' in conf_data): 
-                raise Exception("Fichier " + file + " mal formé, conf absent du fichier") 
+                raise Exception("Configuration file " + file + " syntaxe error. conf key is missing") 
 
             if (not 'sites' in conf_data): 
-                raise Exception("Fichier " + file + " mal formé, sites absent du fichier") 
+                raise Exception("Configuration file " + file + " syntaxe error. sites key is missing") 
 
             if type(conf_data['conf']) == type(None):
-                raise Exception("Fichier " + file + " mal formé, conf non renseigné") 
+                raise Exception("Configuration file " + file + " syntaxe error. conf key has no value") 
 
             self.check_interval = conf_data['conf'].get('check_interval', 15)
             self.elasticsearch_host = conf_data['conf'].get('elasticsearch_host', 'localhost:9200')
-            self.alert_webhook_url = conf_data['conf'].get('alert_webhook_url')
+            self.alert_webhook_url = conf_data['conf'].get('alert_webhook_url', '')
 
             print("Check interval : ", self.check_interval, 's')
             print("Elasticsearch host : ", self.elasticsearch_host)
+            print("Alert WebHook url : ", self.alert_webhook_url)
                        
             if type(conf_data['sites']) == type(None):
-                raise Exception("Fichier " + file + " mal formé, aucun site de configuré ") 
+                raise Exception("Configuration file " + file + " syntaxe error. sites key has no value") 
 
             self.sites = []
             for site in conf_data['sites']:
@@ -73,10 +87,10 @@ class SiteMonitoringApp:
                 site_monitoring_config = SiteMonitoringConfig(site_config.get('url', ''), site_config.get('timeout', ''), site_id, site_config.get('description', ''))
                 if site_monitoring_config.isValid():
                     self.sites.append(site_monitoring_config)
-                    print('Ajout du site ', site_id, ' dans le monitoring avec les paramètres ', site_monitoring_config.toString())
+                    print('Adding website', site_id, 'for monitoring with parameters', site_monitoring_config.toString())
                     if ('alert' in site_config) and (site_config['alert']['raise_alert'] == True):
                         site_monitoring_config.setAlertForSite(True, site_config['alert']['alert_text'])
-                        print("Ajout d'une alert pour", site_id)
+                        print("Adding alert for", site_id)
                 else:
                     print("Configuration invalide pour le site", site_id, ". Site ignoré.")
 
@@ -103,7 +117,7 @@ class SiteMonitoringApp:
         try:
             self.es.index(index='site_monitoring', body=doc)
         except ElasticsearchException as e:
-            print("Erreur lors de l'écriture dans Elasticsearch : ", e)
+            print("Error while writting in Elasticsearch : ", e)
 
     def check_and_send_alert(self, site, check_result):
         if site.alert and not check_result.status:

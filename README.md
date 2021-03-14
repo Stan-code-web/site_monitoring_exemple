@@ -1,37 +1,37 @@
 # WebSite monitoring exemple
 
-Mise en place d'un monitoring de site avec enregistrement dans une base de données {Elasticseach}(https://www.elastic.co/fr/elasticsearch/), visualisation dans un dashboard  {Grafana}(https://grafana.com/) et remontée des alertes via WebHook. 
+Mise en place d'un monitoring de site avec enregistrement dans une base de données [Elasticseach](https://www.elastic.co/fr/elasticsearch/), visualisation dans un dashboard  [Grafana](https://grafana.com/) et remonté des alertes via WebHook. 
 
 Cette stack est lancée et préconfigurée dans un ensemble de container docker lancés via docker compose.
 
 ## Prérequis
 
-Docker et docker compose doivent être présent.
+Docker et docker compose doivent être présents.
 
 ## Lancement
 
 Se positionner dans le répertoire *Docker*
 Exécuter la commande ```docker-compose up```
 
-On peut se connecter à Grafana sur http://localhost:80 avec admin/admin
+On peut se connecter à Grafana sur http://localhost:80 avec admin/admin 
 
 Dans la démo, nous effectuons le monitoring sur deux sites :
 - inwebo.com
 - famira.fr/test.php : Ce site contient un petit script php qui va de manière aléatoire prendre du temps pour répoudre un 200 ou un 500
 
-Dans Grafana nous retrouvons deux graphique sur chaque site :
+Dans Grafana nous retrouvons deux graphiques sur chaque site :
 - Un graphique permettant de visualiser le temps de réponse du site. 
-- Un graphique permettant de voir quand le site est UP (Réponse 200) ou DOWN (Réponse 500 ou timeout).
+- Un graphique permettant de voir quand le site est UP (Réponse success) ou DOWN (Réponse autre que success ou timeout).
 
-En cas de non réponse d'un site ou de réponse autre que success, une alerte de type webhook consultables vers : https://webhook.site/#!/693630a3-7a32-4986-a7d2-5fb272d8b7c0
+En cas de non-réponse d'un site ou de réponse autre que success, une alerte de type webhook est transmise et consultable sur https://webhook.site/#!/693630a3-7a32-4986-a7d2-5fb272d8b7c0
 
 ## Configuration
 
-### Configuration des sites à monitorer
+### Configuration des sites à surveiller
 
-La configuration des sites à monitorer se situe dans le fichier *app/site_monitoring.yml*.
+La configuration des sites à surveiller se situe dans le fichier *app/site_monitoring.yml*.
 
-Configuration globale à tous les sites à surveiller :
+Configuration globale de tous les sites à surveiller :
 
 ```
 conf:
@@ -61,17 +61,17 @@ sites:
         alert_text: 'Famira website is slow or down'
 ```
 
-L'ajout d'un nouveau site à monitorer demande également l'ajout des différents graphiques et alertes dans Grafana.
+L'ajout d'un nouveau site à surveiller demande également l'ajout des différents graphiques dans Grafana.
 
-## Limitations et amélioration
+## Limitations et améliorations
 
 Ce projet n'est absolument pas utilisable tel quel en production. Il manque notamment toute la gestion de la sécurité (Mot de passe par défaut ...).
 
-Le script de monitoring manque de gestion d'erreur et les logs sont à émaliorer (Niveau de log).
+Le script de monitoring manque de gestion d'erreurs et les logs sont à améliorer (Niveau de log).
 
-La configuration du site de monitoring n'est pas rechargée automatiquement
+La configuration du site de monitoring n'est pas rechargée automatiquement.
 
 Les dashboard Grafana nécessiteraient des améliorations, notamment l'utilisation de template.
 
-De nombreuses amélioration à apporter sur la gestion des alertes : Envoyer les alertes seulement si le site est en erreur pendant un certain temps, permettre l'envoi vers d'autre format (mail, slack ...)
+De nombreuses améliorations à apporter sur la gestion des alertes : Envoyer les alertes seulement si le site est en erreur pendant un certain temps, permettre l'envoi vers d'autres formats (mail, slack ...)
 
