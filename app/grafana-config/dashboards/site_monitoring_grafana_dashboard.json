@@ -19,46 +19,6 @@
   "links": [],
   "panels": [
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                2
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "B",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "sum"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "InWebo site is down",
-        "name": "Status of InWebo site alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "notifier1"
-          }
-        ]
-      },
       "aliasColors": {
         "Down": "red"
       },
@@ -132,7 +92,7 @@
               "type": "count"
             }
           ],
-          "query": "monitor.status: up && monitor.id: inwebo-status",
+          "query": "status: up && id: inwebo_status",
           "refId": "A",
           "timeField": "@timestamp"
         },
@@ -154,21 +114,12 @@
               "type": "count"
             }
           ],
-          "query": "monitor.status: down && monitor.id: inwebo-status",
+          "query": "status: down && id: inwebo_status",
           "refId": "B",
           "timeField": "@timestamp"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 2,
-          "visible": true
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -213,46 +164,6 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                5
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "sum"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "1m",
-        "frequency": "30s",
-        "handler": 1,
-        "message": "Famira website is down !",
-        "name": "Status of Famira site alert",
-        "noDataState": "no_data",
-        "notifications": [
-          {
-            "uid": "notifier1"
-          }
-        ]
-      },
       "aliasColors": {
         "Down": "red"
       },
@@ -326,7 +237,7 @@
               "type": "count"
             }
           ],
-          "query": "monitor.status: up && monitor.id: famira-status",
+          "query": "status: up && id: famira_status",
           "refId": "A",
           "timeField": "@timestamp"
         },
@@ -348,21 +259,12 @@
               "type": "count"
             }
           ],
-          "query": "monitor.status: down && monitor.id: famira-status",
+          "query": "status: down && id: famira_status",
           "refId": "B",
           "timeField": "@timestamp"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 5,
-          "visible": true
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -407,46 +309,6 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                2000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "InWebo website is very slow",
-        "name": "InWebo response time alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "notifier1"
-          }
-        ]
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -501,7 +363,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "heartbeat*",
+          "alias": "",
           "bucketAggs": [
             {
               "field": "@timestamp",
@@ -514,29 +376,17 @@
           ],
           "metrics": [
             {
-              "field": "monitor.duration.us",
+              "field": "request_time",
               "id": "1",
-              "settings": {
-                "script": "_value / 1000"
-              },
               "type": "max"
             }
           ],
-          "query": "monitor.id: inwebo-status",
+          "query": "id: inwebo_status",
           "refId": "A",
           "timeField": "@timestamp"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 2000,
-          "visible": true
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -581,46 +431,6 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "30s",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "30s",
-        "frequency": "30s",
-        "handler": 1,
-        "message": "Famira website is very slow",
-        "name": "Famira response time alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "notifier1"
-          }
-        ]
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -675,7 +485,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "heartbeat*",
+          "alias": "",
           "bucketAggs": [
             {
               "field": "@timestamp",
@@ -688,29 +498,17 @@
           ],
           "metrics": [
             {
-              "field": "monitor.duration.us",
+              "field": "request_time",
               "id": "1",
-              "settings": {
-                "script": "_value / 1000"
-              },
               "type": "max"
             }
           ],
-          "query": "monitor.id: famira-status",
+          "query": "id: famira_status",
           "refId": "A",
           "timeField": "@timestamp"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 1000,
-          "visible": true
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -770,5 +568,5 @@
   "timezone": "",
   "title": "Site monitoring",
   "uid": "0jfUVf8Mz",
-  "version": 3
+  "version": 5
 }

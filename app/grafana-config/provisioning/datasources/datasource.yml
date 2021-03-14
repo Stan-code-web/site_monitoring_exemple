@@ -21,7 +21,7 @@ datasources:
     # <string> database user, if used
     user:
     # <string> database name, if used
-    database: 
+    database: site_monitoring
     # <bool> enable/disable basic auth
     basicAuth:
     # <string> basic auth username
@@ -39,4 +39,4 @@ datasources:
       timeInterval: '15s'
     version: 1
     # <bool> allow users to edit datasources from the UI.
-    editable: false
+    editable: true

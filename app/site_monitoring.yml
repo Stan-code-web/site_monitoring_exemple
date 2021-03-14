@@ -1,0 +1,29 @@
+conf:
+  #Interval between each check in second
+  check_interval: 15
+  #Host of the Elasticseach instance to save data
+  elasticsearch_host: 'elasticsearch:9200'
+  #url of the WebHook to raise the alert
+  alert_webhook_url: https://webhook.site/693630a3-7a32-4986-a7d2-5fb272d8b7c0
+
+sites:
+  - famira_status:
+      #Timeout of the request in second
+      timeout: 2
+      #Url of the site to monitor
+      url: https://famira.fr/test.php
+      #Description of the site to monitor
+      description: "Famira Status"
+      alert:
+        #If we want to raise an alert if site response is not success or timeout
+        raise_alert: true
+        #Text to send with the alert
+        alert_text: 'Famira website is slow or down'
+
+  - inwebo_status:
+      timeout: 5
+      url: https://www.inwebo.com
+      description: "Inwebo Status"
+      alert:
+        raise_alert: true
+        alert_text: 'Inwebo website is slow or down'

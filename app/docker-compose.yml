@@ -10,7 +10,7 @@ volumes:
     driver: local
   grafana-storage:
     driver: local
-    
+
 services:
   elk:
     container_name: elk01
@@ -24,29 +24,38 @@ services:
     networks:
       - elastic
       
+    ports:
+      - 9200:9200
+      
     volumes:
       - elk-storage:/usr/share/elasticsearch/data
       
-  heartbeat:
-    container_name: hb
-      
+  site_monitoring:
+    container_name: site_monitoring
+    
     build:
       context: .
-      dockerfile: dockerfile-heartbeat
+      dockerfile: dockerfile-site_monitoring
+      
+    environment:
+      CONF_FILE: site_monitoring.yml
+      
+    volumes:
+      - ./site_monitoring.yml:/usr/src/app/site_monitoring.yml
       
     networks:
       - elastic
       
     depends_on: ['elk']
-      
+    
   grafana:
     image: grafana/grafana
     
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/dashboards/:/etc/grafana/dashboards/
-      - ./grafana/provisioning:/etc/grafana/provisioning/
+      - ./grafana-config/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana-config/dashboards/:/etc/grafana/dashboards/
+      - ./grafana-config/provisioning:/etc/grafana/provisioning/
     
     networks:
       - elastic

@@ -1,0 +1,13 @@
+FROM python:3.9-buster
+
+WORKDIR /usr/src/app
+
+RUN pip install requests
+RUN pip install pyyaml
+RUN pip install elasticsearch
+
+ENV PYTHONUNBUFFERED=0
+
+COPY ./site_monitoring.py ./site_monitoring.py
+
+CMD ["python", "./site_monitoring.py"]
