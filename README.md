@@ -1,6 +1,6 @@
 # WebSite monitoring exemple
 
-Mise en place d'un monitoring de site web à l'aide d'{Elastic Heartbeat}(https://www.elastic.co/fr/beats/heartbeat). Les données des sites web sont remontés dans une base {Elastic Search}(https://www.elastic.co/fr/elasticsearch/) et un dashboard {Grafana}(https://grafana.com/) permet de visualiser les données et de générer des alertes.
+Mise en place d'un monitoring de site web à l'aide d'[Elastic Heartbeat](https://www.elastic.co/fr/beats/heartbeat). Les données des sites web sont remontés dans une base [Elastic Search](https://www.elastic.co/fr/elasticsearch/) et un dashboard {Grafana}(https://grafana.com/) permet de visualiser les données et de générer des alertes.
 Cette stack est lancée et préconfigurée dans un ensemble de container docker lancés via docker compose.
 
 ## Prérequis
