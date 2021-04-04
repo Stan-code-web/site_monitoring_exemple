@@ -152,8 +152,9 @@ class SiteMonitoringApp:
         self.es = Elasticsearch(
             [self.elasticsearch_host]
         )
-
-conf_file = os.getenv('CONF_FILE', 'site_monitoring.yml')
-app = SiteMonitoringApp(conf_file)
-app.execute()
+        
+if __name__ == '__main__':
+    conf_file = os.getenv('CONF_FILE', 'site_monitoring.yml')
+    app = SiteMonitoringApp(conf_file)
+    app.execute()
 
